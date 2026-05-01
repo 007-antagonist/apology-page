@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For You ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial;
+    overflow: hidden;
+    text-align: center;
+}
+
+#startScreen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+button {
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.text {
+    position: absolute;
+    width: 100%;
+    top: 35%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 2s;
+    padding: 0 25px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+#couple {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+</style>
+</head>
+
+<body>
+
+<div id="startScreen">
+    <button onclick="start()">Start ❤️</button>
+</div>
+
+<div id="text" class="text"></div>
+
+<canvas id="couple" width="300" height="200"></canvas>
+
+<script>
+
+/* =======================
+   YOUR BODY (UNCHANGED)
+======================= */
+const message = [
+"Hi… 👋",
+"I’ve been thinking about how to say this properly 💭",
+"............",
+"Here goes nothing....",
+"I’m not the best at clearly expressing myself 😅",
+
+"But I know 3 things for sure:...",
+
+"1. I’ll always try to make you smile 😊❤️",
+"2. I never want you to be mad at me 🥺",
+"3. I WILL get on your nerves at some point 😂",
+
+"I’ve said silly silly white lies before… I know 😔",
+"i just don't want you to be be mad at me and eventually get cold feet 😓",
+"I can be pretty dumb sometimes 😅",
+
+"But one thing stands forever, i would never say something to hurt you.",
+"I’m sorry for the dumb things I do and say 🙏",
+"Please bear with me i mean no harm ❤️😅",
+"I know i'm a stranger.....",
+"So now let me introduce myself",
+
+"Hi… I’m O’Niel Chali Chungu 😊",
+"My friends call me Charlie 😄",
+"I’m a simple one page book… but might come off as complicated sometimes 📖😂",
+"I'm a bit hard to understand 🤔 but one things certain...pineapple on everything 🍍😂",
+"17th December 2025… I realized I liked you 💘",
+"Maybe even loved you ❤️",
+"I imagine you in every future I see 🌍",
+"I love your laugh 😂 your smile 😊 love how you're a goofball 🤪 but still very principaled 🧐",
+
+"If you allow me, let me do one thing…",
+"Let me make you smile ❤️",
+"Let me love you so much it sufocates you 😂",
+"And to always be truthful regardless of the size and impact 🤞🏾",
+
+"I will not always get it right 😅, I will probably irritate you once in while 😂 but rest assured always put in a millions times more to get you smiling again 💪",
+"I won’t always get it right…",
+"But I’ll always try for you ❤️"
+];
+
+let i = 0;
+const box = document.getElementById("text");
+
+/* TEXT */
+function show() {
+    box.style.opacity = 0;
+    box.style.transform = "translateY(20px)";
+
+    setTimeout(() => {
+        box.innerText = message[i];
+        box.style.opacity = 1;
+        box.style.transform = "translateY(0px)";
+        i++;
+
+        if (i < message.length) {
+            setTimeout(show, 3500);
+        }
+    }, 500);
+}
+
+/* START */
+function start() {
+    document.getElementById("startScreen").style.display = "none";
+    show();
+    setTimeout(initCanvas, 100);
+}
+
+/* =======================
+   CANVAS
+======================= */
+const canvas = document.getElementById("couple");
+const ctx = canvas.getContext("2d");
+
+function initCanvas() {
+    requestAnimationFrame(draw);
+}
+
+/* ❤️ HEART BEAT CONTROL */
+let t = 0;
+
+function draw() {
+    ctx.clearRect(0, 0, 300, 200);
+
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 3;
+
+    // BOY
+    ctx.beginPath();
+    ctx.arc(90, 60, 15, 0, Math.PI * 2);
+    ctx.moveTo(90, 75);
+    ctx.lineTo(90, 125);
+    ctx.moveTo(90, 95);
+    ctx.lineTo(70, 110);
+    ctx.moveTo(90, 95);
+    ctx.lineTo(110, 110);
+    ctx.moveTo(90, 125);
+    ctx.lineTo(75, 160);
+    ctx.moveTo(90, 125);
+    ctx.lineTo(105, 160);
+    ctx.stroke();
+
+    // GIRL
+    ctx.beginPath();
+    ctx.arc(210, 60, 15, 0, Math.PI * 2);
+    ctx.moveTo(210, 75);
+    ctx.lineTo(210, 125);
+    ctx.moveTo(210, 95);
+    ctx.lineTo(190, 110);
+    ctx.moveTo(210, 95);
+    ctx.lineTo(230, 110);
+    ctx.moveTo(210, 125);
+    ctx.lineTo(195, 160);
+    ctx.moveTo(210, 125);
+    ctx.lineTo(225, 160);
+    ctx.stroke();
+
+    // HANDS
+    ctx.beginPath();
+    ctx.moveTo(110, 105);
+    ctx.lineTo(190, 105);
+    ctx.stroke();
+
+    // ❤️ BEATING HEART
+    t += 0.08;
+    let beat = 10 + Math.sin(t) * 2.5; // pulse effect
+
+    drawHeart(150, 90, beat);
+
+    requestAnimationFrame(draw);
+}
+
+/* HEART */
+function drawHeart(x, y, size) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+
+    ctx.bezierCurveTo(
+        x - size, y - size,
+        x - size * 2, y + size / 2,
+        x, y + size * 1.5
+    );
+
+    ctx.bezierCurveTo(
+        x + size * 2, y + size / 2,
+        x + size, y - size,
+        x, y
+    );
+
+    ctx.fillStyle = "#ff4d6d";
+    ctx.fill();
+}
+
+</script>
+
+</body>
+</html>
